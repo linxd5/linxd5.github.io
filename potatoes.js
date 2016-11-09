@@ -2,27 +2,35 @@
  * Created by lindayong on 2016/11/3.
  */
 
+// 添加拖拽功能，其分别包括定义了鼠标拖拽开始时的事件handleDragStart
+// 鼠标拖拽过程中的事件handleDragOver和鼠标拖拽结束时的事件handleDrag.
+// 详情可参考HTML5拖放(Drag和Drop)功能开发--基础实战[http://www.cnblogs.com/ijjyo/p/4300717.html]
 function addDrop(element) {
     element.addEventListener('dragstart', handleDragStart, false);
     element.addEventListener('dragover', handleDragOver, false);
     element.addEventListener('drop', handleDrop, false);
 }
 
+// 删除todo的拖拽功能。
 function deleteDrop(element) {
     element.removeEventListener('dragstart', handleDragStart);
     element.removeEventListener('dragover', handleDragOver);
     element.removeEventListener('drop', handleDrop);
 }
 
+// 拖拽开始时，获取拖拽源todo的相关信息
 function handleDragStart(ev) {
     ev.dataTransfer.setData('text', ev.target.id);
 }
 
+// 拖拽过程中，阻止浏览器的默认行为
 function handleDragOver(ev) {
     ev.preventDefault();
 }
 
-// H5 的 drag and drop 本身会自带一些 bug.
+// 拖拽结束时，按照使用习惯摆放源todo和目标todo的位置
+// 如果源todo在目标todo的前面，那么拖拽结束后，我们把源todo放在目标todo的后面
+// 如果源todo在目标todo的后面，那么拖拽结束后，我们把源todo放在目标todo的前面。
 function handleDrop(ev) {
     var data = ev.dataTransfer.getData('text');
     var source_li = document.getElementById(data);
@@ -51,6 +59,7 @@ function handleDrop(ev) {
     }
 }
 
+// 添加双击效果。
 function addDblclick(element) {
     element.ondblclick = function () {
         this.readOnly = false;
@@ -64,6 +73,7 @@ function addDblclick(element) {
     };
 }
 
+// 删除双击效果
 function deleteDblclick(element) {
     console.log(element);
     element.ondblclick = null;
@@ -76,6 +86,7 @@ function addZero(num) {
     return result.toString();
 }
 
+// 按照YYYY-MM-DD-HH-MM-SS的格式返回当前时间
 function getTime() {
     var nowTime = new Date();
     var year = nowTime.getFullYear();
@@ -88,6 +99,8 @@ function getTime() {
 
 }
 
+// todo_input 的回车键被按下时，往todo_list的末尾添加新todo
+// 并给新todo添加双击效果、完成效果、拖拽效果和删除效果
 function todo_input_press(todo_input) {
     if (todo_input.value.length == 0) return;
     var todo_list = document.getElementById('todo_list').getElementsByTagName('ul')[0];
@@ -112,8 +125,7 @@ function todo_input_press(todo_input) {
 }
 
 
-// Add some event listening to the delete_icon
-// The delete_icon is inside a li tag.
+// 添加删除效果
 function addDelete (li) {
     var delete_img = li.getElementsByTagName('img')[0];
     delete_img.onclick = function () {
@@ -128,6 +140,9 @@ function addDelete (li) {
     };
 }
 
+// 给todo添加完成效果
+// todo完成之后，将其放置在complete_list的末尾，添加todo效果
+// 删除双击效果和拖拽效果
 function addDone(li) {
     var todo_checkbox = li.getElementsByTagName('input')[0];
     var completed_todo_ul = document.getElementById('completed_todo').getElementsByTagName('ul')[0];
@@ -141,6 +156,9 @@ function addDone(li) {
     };
 }
 
+// 给complete_todo添加todo效果
+// complete_todo设置为todo时，将其放置在todo_list的末尾
+// 添加双击效果、拖拽效果和完成效果
 function addTodo(li) {
     var done_checkbox = li.getElementsByTagName('input')[0];
     var todo_ul = document.getElementById('todo_list').getElementsByTagName('ul')[0];

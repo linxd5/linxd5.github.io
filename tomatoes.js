@@ -3,9 +3,11 @@
  */
 
 
+// 倒计时开始时，将potato_button的值设置为数字倒计时
+// 关闭potato_button的功能并改变potato_button的鼠标样式，表示其目前不可以被点击
+// 倒计时结束后，将potato_button的值设置为初始值
+// 打开potato_button的功能并改变potato_button的鼠标样式，表示其目前可以被点击
 function tomatoes_js () {
-
-    // remaining_time = 1500;
     all_time = 1500;
     remaining_time = all_time;
     function downCount(element) {
